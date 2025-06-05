@@ -5,7 +5,7 @@ const nameSpan = document.getElementById('name');
 const emailSpan = document.getElementById('user-email');
 const avatarImg = document.getElementById('avatar');
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit'), async (e) => {
   e.preventDefault();
   result.textContent = '';
   userInfo.style.display = 'none';
@@ -52,3 +52,7 @@ form.addEventListener('submit', async (e) => {
     nameSpan.textContent = `${matchedUser.first_name} ${matchedUser.last_name}`;
     emailSpan.textContent = matchedUser.email;
     avatarImg.src = match
+
+    }  
+  }
+      
