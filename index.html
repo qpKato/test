@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Simples</title>
+  <title>Login com GET</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,14 +11,21 @@
     <h2>Login</h2>
 
     <label for="email">E-mail</label>
-    <input type="email" id="email" placeholder="Digite seu e-mail" required />
+    <input type="email" id="email" required />
 
     <label for="password">Senha</label>
-    <input type="password" id="password" placeholder="Digite sua senha" required />
+    <input type="password" id="password" required />
 
     <button type="submit">Entrar</button>
     <p id="result"></p>
   </form>
+
+  <div id="user-info" style="display: none;">
+    <h3>Usuário encontrado:</h3>
+    <p><strong>Nome:</strong> <span id="name"></span></p>
+    <p><strong>Email:</strong> <span id="user-email"></span></p>
+    <img id="avatar" src="" alt="Foto do usuário" width="150" />
+  </div>
 
   <script src="script.js"></script>
 </body>
