@@ -5,44 +5,53 @@ const nameSpan = document.getElementById('name');
 const emailSpan = document.getElementById('user-email');
 const avatarImg = document.getElementById('avatar');
 
-// Senhas simuladas associadas aos e-mails
-const validUsers = {
-  'george.bluth@reqres.in': { password: '123456', id: 1 },
-  'janet.weaver@reqres.in': { password: 'abc123', id: 2 },
-};
-
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+  result.textContent = '';
+  userInfo.style.display = 'none';
 
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value.trim();
 
-  result.textContent = '';
-  userInfo.style.display = 'none';
+  try {
+    // 1. GET: Buscar usuários para validar e-mail
+    const userRes = await fetch('https://reqres.in/api/users?page=1');
+    const userData = await userRes.json();
+    const users = userData.data;
 
-  const user = validUsers[email];
+    const matchedUser = users.find(user => user.email === email);
 
-  if (!user || user.password !== password) {
-    result.style.color = 'red';
-    result.textContent = 'E-mail ou senha incorretos.';
-    return;
-  }
+    if (!matchedUser) {
+      result.style.color = 'red';
+      result.textContent = 'E-mail não cadastrado.';
+      return;
+    }
 
-  // Buscar dados do usuário na API (GET)
-  const response = await fetch(`https://reqres.in/api/users/${user.id}`);
-  const data = await response.json();
+    // 2. POST: Login com senha
+    const loginRes = await fetch('https://reqres.in/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
 
-  if (response.ok) {
-    const userData = data.data;
-    nameSpan.textContent = `${userData.first_name} ${userData.last_name}`;
-    emailSpan.textContent = userData.email;
-    avatarImg.src = userData.avatar;
+    const loginData = await loginRes.json();
 
-    userInfo.style.display = 'block';
+    if (!loginRes.ok) {
+      result.style.color = 'red';
+      result.textContent = loginData.error || 'Senha incorreta.';
+      return;
+    }
+
+    // 3. Exibir dados do usuário
     result.style.color = 'green';
     result.textContent = 'Login bem-sucedido!';
-  } else {
+    nameSpan.textContent = `${matchedUser.first_name} ${matchedUser.last_name}`;
+    emailSpan.textContent = matchedUser.email;
+    avatarImg.src = matchedUser.avatar;
+    userInfo.style.display = 'block';
+
+  } catch (error) {
     result.style.color = 'red';
-    result.textContent = 'Erro ao buscar dados do usuário.';
+    result.textContent = 'Erro na conexão.';
   }
 });
