@@ -1,44 +1,57 @@
-try {
-  const userRes = await fetch('https://reqres.in/api/users?page=1');
+const form = document.getElementById('login-form');
+const result = document.getElementById('result');
+const userInfo = document.getElementById('user-info');
+const nameSpan = document.getElementById('name');
+const emailSpan = document.getElementById('user-email');
+const avatarImg = document.getElementById('avatar');
 
-  if (!userRes.ok) {
-    throw new Error(`Erro no GET /users: ${userRes.status}`);
-  }
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  result.textContent = '';
+  userInfo.style.display = 'none';
 
-  const userData = await userRes.json();
-  const users = userData.data;
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
 
-  const matchedUser = users.find(user => user.email === email);
+  try {
+    // 1. GET para verificar se o e-mail existe
+    const userRes = await fetch('https://reqres.in/api/users?page=1');
+    const userData = await userRes.json();
+    const users = userData.data;
 
-  if (!matchedUser) {
-    result.style.color = 'red';
-    result.textContent = 'E-mail não cadastrado.';
-    return;
-  }
+    const matchedUser = users.find(user => user.email === email);
 
-  const loginRes = await fetch('https://reqres.in/api/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  });
+    if (!matchedUser) {
+      result.style.color = 'red';
+      result.textContent = 'E-mail não cadastrado.';
+      return;
+    }
 
-  if (!loginRes.ok) {
+    // 2. POST para tentar login
+    const loginRes = await fetch('https://reqres.in/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
     const loginData = await loginRes.json();
+
+    if (!loginRes.ok) {
+      result.style.color = 'red';
+      result.textContent = loginData.error || 'Erro no login.';
+      return;
+    }
+
+    // 3. Exibe os dados do usuário
+    result.style.color = 'green';
+    result.textContent = `Login bem-sucedido! Token: ${loginData.token}`;
+    nameSpan.textContent = `${matchedUser.first_name} ${matchedUser.last_name}`;
+    emailSpan.textContent = matchedUser.email;
+    avatarImg.src = matchedUser.avatar;
+    userInfo.style.display = 'block';
+
+  } catch (error) {
     result.style.color = 'red';
-    result.textContent = loginData.error || 'Erro no login.';
-    return;
+    result.textContent = `Erro na conexão: ${error.message}`;
   }
-
-  const loginData = await loginRes.json();
-
-  result.style.color = 'green';
-  result.textContent = 'Login bem-sucedido!';
-  nameSpan.textContent = `${matchedUser.first_name} ${matchedUser.last_name}`;
-  emailSpan.textContent = matchedUser.email;
-  avatarImg.src = matchedUser.avatar;
-  userInfo.style.display = 'block';
-
-} catch (error) {
-  result.style.color = 'red';
-  result.textContent = `Erro na conexão: ${error.message}`;
-}
+});
