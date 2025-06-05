@@ -4,54 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Simples</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      background: #330d49;
-      margin: 0;
-    }
-    form {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 300px;
-      width: 100%;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-    input, button {
-      width: 100%;
-      margin-top: 5px;
-      padding: 8px;
-      font-size: 1rem;
-    }
-    button {
-      background-color: #341247;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #4e1f6e;
-    }
-    #result {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <form id="login-form">
     <h2>Login</h2>
+
     <label for="email">E-mail</label>
     <input type="email" id="email" placeholder="Digite seu e-mail" required />
 
@@ -62,40 +20,6 @@
     <p id="result"></p>
   </form>
 
-  <script>
-    const form = document.getElementById('login-form');
-    const result = document.getElementById('result');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      result.style.color = 'gray';
-      result.textContent = 'Enviando...';
-
-      try {
-        const response = await fetch('https://reqres.in/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          result.style.color = 'green';
-          result.textContent = `Login bem-sucedido! Token: ${data.token}`;
-        } else {
-          result.style.color = 'red';
-          result.textContent = data.error || 'Erro no login.';
-        }
-      } catch (error) {
-        result.style.color = 'red';
-        result.textContent = 'Erro de conexão.';
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
