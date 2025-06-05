@@ -7,31 +7,23 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <form id="login-form">
-    <h2>Login</h2>
-
-    <label for="email">E-mail</label>
-    <input type="email" id="email" required />
-
-    <label for="password">Senha</label>
-    <input type="password" id="password" required />
-
-    <button type="submit">Entrar</button>
-    <p id="result"></p>
-  </form>
-    <div id="user-info" style="display:none; margin-top: 20px; background: white; padding: 10px; border-radius: 6px;">
-  <p><strong>Nome:</strong> <span id="name"></span></p>
-  <p><strong>E-mail:</strong> <span id="user-email"></span></p>
-  <img id="avatar" src="" alt="Avatar" style="width:100px; border-radius: 50%;" />
+  <div class="container">
+    <form id="login-form">
+      <h2>Login</h2>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" required />
+      <label for="password">Senha</label>
+      <input type="password" id="password" required />
+      <button type="submit">Entrar</button>
+      <p id="result"></p>
+    </form>
+    <div id="user-info">
+      <h3>Usuário Logado:</h3>
+      <p><strong>Nome:</strong> <span id="name"></span></p>
+      <p><strong>E-mail:</strong> <span id="user-email"></span></p>
+      <img id="avatar" src="" alt="Avatar" />
     </div>
-
-  <div id="user-info" style="display: none;">
-    <h3>Usuário Logado:</h3>
-    <p><strong>Nome:</strong> <span id="name"></span></p>
-    <p><strong>Email:</strong> <span id="user-email"></span></p>
-    <img id="avatar" src="" alt="Foto do usuário" width="150" />
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
