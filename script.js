@@ -12,33 +12,22 @@ form.addEventListener('submit', async (e) => {
 
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value.trim();
+  const apiKey = 'reqres-free-v1'; // Chave de API fornecida pela Reqres
 
   try {
-    // Buscar usuários página 1 e 2
-    const res1 = await fetch('https://reqres.in/api/users?page=1');
-    const data1 = await res1.json();
-
-    const res2 = await fetch('https://reqres.in/api/users?page=2');
-    const data2 = await res2.json();
-
-    const allUsers = [...data1.data, ...data2.data];
-
-    const matchedUser = allUsers.find(user => user.email === email);
-
-    if (!matchedUser) {
-      result.style.color = 'red';
-      result.textContent = 'E-mail não cadastrado.';
-      return;
-    }
-
-    // Tentar login (POST)
+    // Log para depuração
+    console.log('Enviando login:', { email, password });
     const loginRes = await fetch('https://reqres.in/api/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey
+      },
       body: JSON.stringify({ email, password })
     });
 
     const loginData = await loginRes.json();
+    console.log('Resposta da API:', loginRes.status, loginData);
 
     if (!loginRes.ok) {
       result.style.color = 'red';
@@ -46,13 +35,10 @@ form.addEventListener('submit', async (e) => {
       return;
     }
 
-    // Exibir dados do usuário e foto
+    // Exibir apenas o token de login
     result.style.color = 'green';
     result.textContent = `Login bem-sucedido! Token: ${loginData.token}`;
-    nameSpan.textContent = `${matchedUser.first_name} ${matchedUser.last_name}`;
-    emailSpan.textContent = matchedUser.email;
-    avatarImg.src = matchedUser.avatar;
-    userInfo.style.display = 'block';
+    userInfo.style.display = 'none';
 
   } catch (error) {
     result.style.color = 'red';
