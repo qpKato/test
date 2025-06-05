@@ -11,7 +11,7 @@ form.addEventListener('submit', async (e) => {
   result.textContent = 'Enviando...';
 
   try {
-    const response = await fetch('https://reqres.in/api/login', {
+    const response = await fetch('https://reqres.in/api/users?page=2', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
