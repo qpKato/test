@@ -53,6 +53,6 @@ form.addEventListener('submit'), async (e) => {
     emailSpan.textContent = matchedUser.email;
     avatarImg.src = match
 
-    }  
+     
   }
-      
+ }     
