@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+  background: linear-gradient(120deg, #232946 0%, #1a1a2e 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
@@ -25,9 +25,9 @@ body {
 }
 
 #login-form {
-  background: #fff;
+  background: #2d3559;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 32px rgba(20,20,40,0.18);
   padding: 32px 28px 24px 28px;
   min-width: 320px;
   max-width: 350px;
@@ -46,28 +46,29 @@ body {
 
 #login-form h2 {
   margin-bottom: 10px;
-  color: #3a7bd5;
+  color: #eebbc3;
   letter-spacing: 1px;
 }
 #login-form label {
-  font-weight: 500;
-  color: #444;
+  color: #eebbc3;
 }
 #login-form input {
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #cfd8dc;
+  border: 1px solid #7b9cff;
   font-size: 1rem;
   margin-bottom: 8px;
   outline: none;
   transition: border 0.2s;
+  background: #232946;
+  color: #f4f4f4;
 }
 #login-form input:focus {
-  border: 1.5px solid #3a7bd5;
+  border: 1.5px solid #eebbc3;
 }
 #login-form button {
-  background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
-  color: #fff;
+  background: linear-gradient(90deg, #7b9cff 0%, #232946 100%);
+  color: #eebbc3;
   border: none;
   border-radius: 8px;
   padding: 12px 0;
@@ -79,17 +80,18 @@ body {
   transition: background 0.2s;
 }
 #login-form button:hover {
-  background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+  background: linear-gradient(90deg, #232946 0%, #7b9cff 100%);
 }
 #result {
   min-height: 24px;
   font-size: 1rem;
   margin-top: 8px;
   text-align: center;
+  color: #eebbc3;
 }
 
 #user-info {
-  background: #fff;
+  background: #2d3559;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   padding: 32px 28px 24px 28px;
@@ -118,16 +120,55 @@ body {
   width: 110px;
   height: 110px;
   object-fit: cover;
-  border: 3px solid #3a7bd5;
+  border: 3px solid #eebbc3;
 }
 #user-info p, #user-info h3 {
   margin: 8px 0 0 0;
-  color: #333;
+  color: #f4f4f4;
   font-size: 1.08rem;
 }
 #user-info h3 {
-  color: #3a7bd5;
+  color: #eebbc3;
   margin-bottom: 10px;
+}
+
+.wave-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 220px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.wave {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  min-width: 100vw;
+  height: 220px;
+  background: url('data:image/svg+xml;utf8,<svg width="1920" height="220" viewBox="0 0 1920 220" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 110C160 180 480 180 640 110C800 40 1120 40 1280 110C1440 180 1760 180 1920 110V220H0V110Z" fill="%2300d2ff" fill-opacity="0.7"/></svg>') repeat-x;
+  background-size: 100vw 220px;
+  animation: waveMove 10s linear infinite alternate;
+  opacity: 1;
+}
+.wave.wave2 {
+  background: url('data:image/svg+xml;utf8,<svg width="1920" height="220" viewBox="0 0 1920 220" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 160C160 220 480 220 640 160C800 100 1120 100 1280 160C1440 220 1760 220 1920 160V220H0V160Z" fill="%233a7bd5" fill-opacity="0.5"/></svg>') repeat-x;
+  background-size: 100vw 220px;
+  animation: waveMove2 16s linear infinite alternate;
+  opacity: 1;
+}
+
+@keyframes waveMove {
+  0% { background-position-x: 0; }
+  100% { background-position-x: -100vw; }
+}
+@keyframes waveMove2 {
+  0% { background-position-x: 0; }
+  100% { background-position-x: 100vw; }
 }
 
 @media (max-width: 800px) {
