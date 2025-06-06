@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          
+          'x-api-key': apiKey
         },
         body: JSON.stringify({ email, password })
       });
